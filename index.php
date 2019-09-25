@@ -6,7 +6,7 @@
       searchUnicorn();
     }
     else if(isset($_GET['subject'])){
-      echo "To be done";
+      getUnicornFromList();
     }
     else{
       allUnicorns();
@@ -64,7 +64,35 @@
     }
       
     
-    } 
+    }
+
+    function getUnicornFromList(){
+      if(isset($_GET['subject'])){
+        $clickedUnicorn = $_GET['subject'];
+        $headers = array('Accept' => 'application/json');
+        
+  
+        $response = Unirest\Request::get("http://unicorns.idioti.se/" . $clickedUnicorn, $headers);
+        
+        $response->body;        
+        $response->raw_body;
+  
+        $result = json_decode($response->raw_body, true);
+        $id = $result['id'];
+        $name = $result['name'];
+        $date = substr($result['spottedWhen'], 0, 10);
+        $picture = $result['image'];
+        $reportedBy = $result['reportedBy'];
+        $description = $result['description'];
+  
+        echo "<h2>$name</h2>";
+        echo "<p>$date</p>";
+        echo "<p>$description</p>";
+        echo "<img src='$picture'>";
+        echo "<p>Rapporterad av: $reportedBy</p>";
+        
+    }
+    }
 ?>
 
 
