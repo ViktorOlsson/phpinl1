@@ -1,0 +1,17 @@
+{
+    "name": "viktor/inl1",
+    "description": "inl\u0000mning1 webbtj\u0000nster",
+    "require": {
+        "monolog/monolog": "^1.24",
+        "mashape/unirest-php": "^3.0"
+    },
+    "autoload": {
+      "psr-0": {"Unirest": "lib/"}
+    },
+    "authors": [
+        {
+            "name": "ViktorOlsson",
+            "email": "vike_olsson@hotmail.com"
+        }
+    ]
+}
