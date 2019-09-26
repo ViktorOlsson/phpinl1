@@ -75,6 +75,8 @@
     }
 
     function getUnicornFromList(){
+      $log = new Logger('UnicornList');
+      $log->pushHandler(new StreamHandler('visits.log', Logger::INFO));
       if(isset($_GET['subject'])){
         $clickedUnicorn = $_GET['subject'];
         $headers = array('Accept' => 'application/json');
@@ -98,7 +100,7 @@
         echo "<p>$description</p>";
         echo "<img src='$picture'>";
         echo "<p>Rapporterad av: $reportedBy</p>";
-        
+        $log->info("Requested info about specific $name");
     }
     }
 ?>
