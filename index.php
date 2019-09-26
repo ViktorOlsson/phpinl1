@@ -16,11 +16,14 @@
   }
 
   function allUnicorns(){
+    $log = new Logger('UnicornAll');
+    $log->pushHandler(new StreamHandler('visits.log', Logger::INFO));
     $headers = array('Accept' => 'application/json');
     $response = Unirest\Request::get("http://unicorns.idioti.se", $headers);
     $response->body;        
     $response->raw_body;
     $result = json_decode($response->raw_body, true);
+    $log->info("Requested info about all unicorns");
     foreach($result as $item){
       $id = $item['id'];
       $name = $item['name'];
