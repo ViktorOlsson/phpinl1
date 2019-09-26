@@ -1,5 +1,7 @@
 <?php
   require 'vendor/autoload.php';
+  use Monolog\Logger;
+  use Monolog\Handler\StreamHandler;
 
   function run(){
     if(isset($_GET['unicorn'])){
@@ -14,11 +16,14 @@
   }
 
   function allUnicorns(){
+    $log = new Logger('UnicornAll');
+    $log->pushHandler(new StreamHandler('visits.log', Logger::INFO));
     $headers = array('Accept' => 'application/json');
     $response = Unirest\Request::get("http://unicorns.idioti.se", $headers);
     $response->body;        
     $response->raw_body;
     $result = json_decode($response->raw_body, true);
+    $log->info("Requested info about all unicorns");
     foreach($result as $item){
       $id = $item['id'];
       $name = $item['name'];
@@ -33,6 +38,8 @@
   }
 
   function searchUnicorn(){
+    $log = new Logger('UnicornSearch');
+    $log->pushHandler(new StreamHandler('visits.log', Logger::INFO));
     if(isset($_GET['unicorn'])){
     
     $unicorn = $_GET['unicorn'];
@@ -57,6 +64,7 @@
     echo "<img src='$picture'>";
     echo "<p>Rapporterad av: $reportedBy</p>";
     echo "</div>";
+    $log->info("Requested info about $name");
     }
     else{
       echo "Ange ett id på en enhörning";
@@ -67,6 +75,8 @@
     }
 
     function getUnicornFromList(){
+      $log = new Logger('UnicornList');
+      $log->pushHandler(new StreamHandler('visits.log', Logger::INFO));
       if(isset($_GET['subject'])){
         $clickedUnicorn = $_GET['subject'];
         $headers = array('Accept' => 'application/json');
@@ -90,7 +100,7 @@
         echo "<p>$description</p>";
         echo "<img src='$picture'>";
         echo "<p>Rapporterad av: $reportedBy</p>";
-        
+        $log->info("Requested info about specific $name");
     }
     }
 ?>
