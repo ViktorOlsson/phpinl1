@@ -1,5 +1,7 @@
 <?php
   require 'vendor/autoload.php';
+  use Monolog\Logger;
+  use Monolog\Handler\StreamHandler;
 
   function run(){
     if(isset($_GET['unicorn'])){
@@ -33,6 +35,8 @@
   }
 
   function searchUnicorn(){
+    $log = new Logger('UnicornSearch');
+    $log->pushHandler(new StreamHandler('visits.log', Logger::INFO));
     if(isset($_GET['unicorn'])){
     
     $unicorn = $_GET['unicorn'];
@@ -57,6 +61,7 @@
     echo "<img src='$picture'>";
     echo "<p>Rapporterad av: $reportedBy</p>";
     echo "</div>";
+    $log->info("Requested info about $name");
     }
     else{
       echo "Ange ett id på en enhörning";
