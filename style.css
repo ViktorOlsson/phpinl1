@@ -1,0 +1,9 @@
+#container {
+  text-align: center;
+  color: black;
+}
+
+#content-div > img {
+  width: 1000px;
+  height: 500px;
+}
